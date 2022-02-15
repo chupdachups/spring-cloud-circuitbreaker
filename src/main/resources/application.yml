@@ -1,0 +1,85 @@
+server:
+  port: ${port:7011}
+
+spring:
+  application:
+    name: sccb
+  config:
+     # config server를 지정하지 않으면 default localhost:8888, 아래 sping.cloud.uri 보다 우선시 한다.
+     #import: "optional:configserver:http://localhost:9001"
+     import: "optional:configserver:${config_servers:http://localhost:9001}"   
+  profiles:
+    active: ${profile:local}
+    include: common
+  cloud: 
+    config:
+      uri: ${config_servers:http://localhost:9001}
+      
+#resilience4j.circuitbreaker: 
+#  configs: 
+#    default: 
+#      slidingWindowSize: 100 
+#      permittedNumberOfCallsInHalfOpenState: 10 
+#      waitDurationInOpenState: 10000 
+#      failureRateThreshold: 60 
+#      eventConsumerBufferSize: 10 
+#      registerHealthIndicator: true 
+#    someShared: 
+#      slidingWindowSize: 10 
+#      permittedNumberOfCallsInHalfOpenState: 3
+#      failureRateThreshold: 30
+#      minimumNumberOfCalls: 5
+#  instances: 
+#    backendA: 
+#      baseConfig: default 
+#      waitDurationInOpenState: 5000 
+#    testSCCB: 
+#      baseConfig: someShared
+
+
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      registerHealthIndicator: true
+      failureRateThreshold: 50
+      slowCallRateThreshold: 100
+      slowCallDurationThreshold: 60000
+      permittedNumberOfCallsInHalfOpenState: 4
+      maxWaitDurationInHalfOpenState: 1000
+      slidingWindowType: COUNT_BASED
+      slidingWindowSize: 10
+      minimumNumberOfCalls: 10
+      waitDurationInOpenState: 10000
+  instances:
+    testsccb:
+      baseConfig: default
+
+resilience4j:
+  circuitbreaker:
+    metrics:
+      enabled: true
+
+#resilience4j.circuitbreaker:
+#  configs:
+#    default:
+#      register-health-indicator: true
+#      failure-rate-threshold: 50
+#      permitted-number-of-calls-in-half-open-state: 5
+#      sliding-window-size: 10
+#      minimum-number-of-calls: 5
+#  instances:
+#    testsccb:
+#      baseConfig: default
+      
+      
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: always
+  health:
+    circuitbreakers:
+      enabled: true      
