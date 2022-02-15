@@ -15,27 +15,6 @@ spring:
     config:
       uri: ${config_servers:http://localhost:9001}
       
-#resilience4j.circuitbreaker: 
-#  configs: 
-#    default: 
-#      slidingWindowSize: 100 
-#      permittedNumberOfCallsInHalfOpenState: 10 
-#      waitDurationInOpenState: 10000 
-#      failureRateThreshold: 60 
-#      eventConsumerBufferSize: 10 
-#      registerHealthIndicator: true 
-#    someShared: 
-#      slidingWindowSize: 10 
-#      permittedNumberOfCallsInHalfOpenState: 3
-#      failureRateThreshold: 30
-#      minimumNumberOfCalls: 5
-#  instances: 
-#    backendA: 
-#      baseConfig: default 
-#      waitDurationInOpenState: 5000 
-#    testSCCB: 
-#      baseConfig: someShared
-
 
 resilience4j.circuitbreaker:
   configs:
