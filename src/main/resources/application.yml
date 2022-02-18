@@ -16,39 +16,39 @@ spring:
       uri: ${config_servers:http://localhost:9001}
       
 
-resilience4j.circuitbreaker:
-  configs:
-    default:
-      registerHealthIndicator: true
-      failureRateThreshold: 50
-      slowCallRateThreshold: 100
-      slowCallDurationThreshold: 60000
-      permittedNumberOfCallsInHalfOpenState: 4
-      maxWaitDurationInHalfOpenState: 1000
-      slidingWindowType: COUNT_BASED
-      slidingWindowSize: 10
-      minimumNumberOfCalls: 10
-      waitDurationInOpenState: 10000
-  instances:
-    testsccb:
-      baseConfig: default
+#resilience4j.circuitbreaker:
+#  configs:
+#    default:
+#      registerHealthIndicator: true
+#      failureRateThreshold: 50
+#      slowCallRateThreshold: 100
+#      slowCallDurationThreshold: 60000
+#      permittedNumberOfCallsInHalfOpenState: 4
+#      maxWaitDurationInHalfOpenState: 1000
+#      slidingWindowType: COUNT_BASED
+#      slidingWindowSize: 10
+#      minimumNumberOfCalls: 10
+#      waitDurationInOpenState: 10000
+#  instances:
+#    testsccb:
+#      baseConfig: default
 
 resilience4j:
   circuitbreaker:
     metrics:
       enabled: true
 
-#resilience4j.circuitbreaker:
-#  configs:
-#    default:
-#      register-health-indicator: true
-#      failure-rate-threshold: 50
-#      permitted-number-of-calls-in-half-open-state: 5
-#      sliding-window-size: 10
-#      minimum-number-of-calls: 5
-#  instances:
-#    testsccb:
-#      baseConfig: default
+resilience4j.circuitbreaker:
+  configs:
+    default:
+      register-health-indicator: true
+      failure-rate-threshold: 50
+      permitted-number-of-calls-in-half-open-state: 5
+      sliding-window-size: 10
+      minimum-number-of-calls: 5
+  instances:
+    testsccb:
+      baseConfig: default
       
       
 management:
